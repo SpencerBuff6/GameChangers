@@ -1,0 +1,52 @@
+﻿body {
+    background-color: #ccc;
+    left: 25%;
+    padding: 100px;
+    text-align: center;
+    border: 2px solid #000;
+    border-radius: 10px;
+}
+
+h1 {
+    background-color: #aaa;
+    border: 2px solid #2e2;
+    border-radius: 10px;
+}
+
+hr {
+    background-color: #aaa;
+    height: 2px;
+}
+
+a {
+    width: 5%;
+    background-color: #aaa;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #2e2;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+a:hover {
+    width: 5%;
+    background-color: #2a2;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #2e2;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+a:active {
+    width: 5%;
+    background-color: #282;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #2e2;
+    border-radius: 10px;
+    cursor: pointer;
+}
