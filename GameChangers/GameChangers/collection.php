@@ -1,5 +1,5 @@
 <?php
-$pageName = "Home";
+$pageName = "Game Collection";
 
 include_once "./Wrappers/header.php";
 include_once "./Wrappers/menu.php";
