@@ -1,19 +1,42 @@
 <?php
 
-$menu = [
+// Logged Out Menu
+$menuOut = [
     0 => [
-        "name" => "Home Page",
-        "link" => "../index.php"
+        0 => "Home Page",
+        1 => "../index.php"
     ],
-    2 => [
-        "name" => "Game Collection",
-        "link" => "../collection.php"
+    1 => [
+        0 => "Log In",
+        1 => "../logIn.php"
     ]
 ];
+
+// Logged In Menu
+$menuIn = [
+    0 => [
+        0 => "Home Page",
+        1 => "../index.php"
+    ],
+    1 => [
+        0 => "Add Game",
+        1 => "../AddGame.php"
+    ],
+    2 => [
+        0 => "Log Out",
+        1 => "../logOut.php"
+    ]
+];
+
+$menu = $menuOut;
 
 ?>
 
 <br />
-<a href=<?php echo $menu[0]["link"]; ?>>    <?php echo $menu[0]["name"]; ?></a> &nbsp; &nbsp;
-<a href=<?php echo $menu[2]["link"]; ?>>    <?php echo $menu[2]["name"]; ?></a>
+<?php
+    foreach ($menu as [$name, $link])
+    {
+        echo "<a href=$link> $name</a> &nbsp; &nbsp;";
+    }
+?>
 <br />
