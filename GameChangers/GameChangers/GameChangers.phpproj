@@ -5,5 +5,7 @@
   <PropertyGroup>
     <EnvName>PHPDev</EnvName>
     <RuntimeVersion>8.1</RuntimeVersion>
+    <SpecificPageValue>Register.php</SpecificPageValue>
+    <StartAction>SpecificPage</StartAction>
   </PropertyGroup>
 </Project>

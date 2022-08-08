@@ -1,6 +1,8 @@
 <?php
 
 require "config.php";
+require "header.php";
+require "menu.php";
 
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
@@ -129,3 +131,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         </div>
     </body>
 </html>
+
+<?php
+require "footer.php";
+?>
