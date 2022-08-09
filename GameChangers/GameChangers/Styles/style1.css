@@ -1,4 +1,5 @@
-﻿body {
+﻿
+body {
     background-color: #ccc;
     left: 25%;
     padding: 100px;
@@ -19,7 +20,7 @@ hr {
 }
 
 a {
-    width: 5%;
+    width: 125px;
     background-color: #aaa;
     color: black;
     padding: 14px 20px;
@@ -30,7 +31,7 @@ a {
 }
 
 a:hover {
-    width: 5%;
+    width: 125px;
     background-color: #2a2;
     color: black;
     padding: 14px 20px;
@@ -41,7 +42,7 @@ a:hover {
 }
 
 a:active {
-    width: 5%;
+    width: 125px;
     background-color: #282;
     color: black;
     padding: 14px 20px;
@@ -49,4 +50,79 @@ a:active {
     border: 2px solid #2e2;
     border-radius: 10px;
     cursor: pointer;
+}
+
+label {
+    display: inline-block;
+    width: 200px;
+    margin-left: -250px;
+    margin-right: 20px;
+    text-align: right;
+}
+
+fieldset {
+    border: none;
+    width: 100%;
+    margin: 0px auto;
+}
+
+input {
+    background-color: #fff;
+    padding: 3px 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.btn {
+    width: 125px;
+    background-color: #aaa;
+    text-align: center;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #2e2;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    width: 125px;
+    background-color: #2a2;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #2e2;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn:active {
+    width: 125px;
+    background-color: #282;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #2e2;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th {
+    background-color: #aaa;
+    border: 2px solid #2e2;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+tr {
+    padding: 5px 0;
+}
+
+td {
+    padding: 0 10px;
 }

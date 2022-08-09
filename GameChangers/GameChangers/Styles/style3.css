@@ -1,4 +1,127 @@
 ﻿
 body {
+    background-color: #fee;
+    left: 25%;
+    padding: 100px;
+    text-align: center;
+    border: 2px solid #f00;
+    border-radius: 10px;
+}
 
+h1 {
+    background-color: #daa;
+    border: 2px solid #f00;
+    border-radius: 10px;
+}
+
+hr {
+    background-color: #d88;
+    height: 2px;
+}
+
+a {
+    width: 125px;
+    background-color: #daa;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #f00;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+a:hover {
+    width: 125px;
+    background-color: #f66;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #f00;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+a:active {
+    width: 125px;
+    background-color: #f33;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #f00;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+label {
+    display: inline-block;
+    width: 200px;
+    margin-left: -250px;
+    margin-right: 20px;
+    text-align: right;
+}
+
+fieldset {
+    border: none;
+    width: 100%;
+    margin: 0px auto;
+}
+
+input {
+    background-color: #fff;
+    padding: 3px 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.btn {
+    width: 125px;
+    background-color: #daa;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #f00;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    width: 125px;
+    background-color: #f66;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #f00;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn:active {
+    width: 125px;
+    background-color: #f33;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid #f00;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th {
+    background-color: #daa;
+    border: 2px solid #f00;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+tr {
+    padding: 5px 0;
+}
+
+td {
+    padding: 0 10px;
 }

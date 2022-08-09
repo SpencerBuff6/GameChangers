@@ -32,7 +32,7 @@ $menuIn = [
     ]
 ];
 
-$menu = $menuIn;
+$menu = (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) ? $menuIn : $menuOut;
 
 ?>
 
