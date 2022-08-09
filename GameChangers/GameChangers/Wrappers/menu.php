@@ -8,7 +8,11 @@ $menuOut = [
     ],
     1 => [
         0 => "Log In",
-        1 => "../logIn.php"
+        1 => "../Login.php"
+    ],
+    2 => [
+        0 => "Register Account",
+        1 => "../Register.php"
     ]
 ];
 
@@ -24,11 +28,11 @@ $menuIn = [
     ],
     2 => [
         0 => "Log Out",
-        1 => "../logOut.php"
+        1 => "../Logout.php"
     ]
 ];
 
-$menu = $menuOut;
+$menu = $menuIn;
 
 ?>
 

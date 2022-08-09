@@ -77,10 +77,6 @@ if ($user != null)
 
 ?>
 
-<p>
-    Duis nec mauris eros. Integer eleifend tellus sed augue fringilla mollis. Morbi nec convallis nunc. Sed condimentum nulla elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut viverra, nulla id congue iaculis, velit diam tempus leo, gravida tempus arcu lectus eu lorem. Vestibulum lobortis est in tortor pretium, in lobortis nisi consequat. Vivamus rutrum molestie turpis eu posuere. Curabitur enim ante, imperdiet ac consectetur ultricies, malesuada sit amet ipsum. Phasellus id cursus ex.
-</p>
-
 <?php
 include_once "./Wrappers/footer.php";
 ?>
