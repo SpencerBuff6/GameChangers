@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // Logged Out Menu
 $menuOut = [
     0 => [

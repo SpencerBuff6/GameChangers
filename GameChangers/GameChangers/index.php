@@ -5,28 +5,33 @@ $pageName = "Home";
 $_SESSION["loggedin"] = true;
 
 if (!isset($_SESSION["games"])) $_SESSION["games"] = [
-    0 => [
-        0 => "Game Name",
-        1 => "01/01/2001",
-        2 => "RPG",
-        3 => "6/10"
-    ],
-    1 => [
-        0 => "Game Name",
-        1 => "01/01/2001",
-        2 => "RPG",
-        3 => "6/10"
-    ],
-    2 => [
-        0 => "Game Name",
-        1 => "01/01/2001",
-        2 => "RPG",
-        3 => "6/10"
-    ]
+
 ];
+
+function DeleteGame(int $index)
+{
+    unset($_SESSION["games"][$index]);
+
+    // Arrays In PHP Do Not Re-index, Must Be Done Manually
+    if (count($_SESSION["games"]) != 0)
+    {
+        $NewIndex = 0;
+
+        $_SESSION["games"] = array_combine(range($NewIndex,
+                                                 count($_SESSION["games"]) + ($NewIndex-1)),
+                                           array_values($_SESSION["games"]));
+    }
+}
+
+if (isset($_POST['DeleteGame']))
+{
+    DeleteGame($_POST['DeleteGame']);
+}
 
 include_once "./Wrappers/header.php";
 include_once "./Wrappers/menu.php";
+
+//print_r($_SESSION["games"]);
 ?>
 
 <h1>
@@ -39,7 +44,7 @@ include_once "./Wrappers/menu.php";
 
 <?php
 
-if (isset($_SESSION['loggedin']))
+if (isset($_SESSION['loggedin']) && isset($_SESSION["games"]) && count($_SESSION["games"]) > 0)
 {
     echo "
     <table>
@@ -56,22 +61,31 @@ if (isset($_SESSION['loggedin']))
             <th>
                 Rating
             </th>
+            <th>
+                Delete?
+            </th>
         </tr>";
-    foreach ($_SESSION["games"] as [$name, $releaseDate, $genre, $rating])
+    for($i = 0; $i < count($_SESSION["games"]); $i++)
     {
+        $g = $_SESSION["games"][$i];
         echo "
         <tr>
             <td>
-                $name
+                $g[0]
             </td>
             <td>
-                $releaseDate
+                $g[1]
             </td>
             <td>
-                $genre
+                $g[2]
             </td>
             <td>
-                $rating
+                $g[3]
+            </td>
+            <td>
+                <form method='post'>
+                    <input class='btn delete' type='submit' name='DeleteGame' value='$i'/>
+                </form>
             </td>
         </tr>";
     }

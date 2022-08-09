@@ -107,6 +107,40 @@ input {
     cursor: pointer;
 }
 
+.delete {
+    width: 75px;
+    background-color: #aad;
+    text-align: center;
+    color: black;
+    padding: 5px 10px;
+    margin: 3px 0;
+    border: 2px solid #00f;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete:hover {
+    width: 75px;
+    background-color: #66f;
+    color: black;
+    padding: 5px 10px;
+    margin: 3px 0;
+    border: 2px solid #00f;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete:active {
+    width: 75px;
+    background-color: #33d;
+    color: black;
+    padding: 5px 10px;
+    margin: 3px 0;
+    border: 2px solid #00f;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 table {
     margin-left: auto;
     margin-right: auto;
