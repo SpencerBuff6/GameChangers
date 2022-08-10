@@ -1,8 +1,9 @@
 <?php
+session_start();
 
 require "config.php";
-require "header.php";
-require "menu.php";
+require "./Wrappers/header.php";
+require "./Wrappers/menu.php";
 
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";

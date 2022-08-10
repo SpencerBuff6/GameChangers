@@ -1,29 +1,37 @@
 <?php
+session_start();
+
 $pageName = "Home";
-$user = true;
-$games = [
-    0 => [
-        0 => "Game Name",
-        1 => "01/01/2001",
-        2 => "RPG",
-        3 => "6/10"
-    ],
-    1 => [
-        0 => "Game Name",
-        1 => "01/01/2001",
-        2 => "RPG",
-        3 => "6/10"
-    ],
-    2 => [
-        0 => "Game Name",
-        1 => "01/01/2001",
-        2 => "RPG",
-        3 => "6/10"
-    ]
+$_SESSION["loggedin"] = true;
+
+if (!isset($_SESSION["games"])) $_SESSION["games"] = [
+
 ];
+
+function DeleteGame(int $index)
+{
+    unset($_SESSION["games"][$index]);
+
+    // Arrays In PHP Do Not Re-index, Must Be Done Manually
+    if (count($_SESSION["games"]) != 0)
+    {
+        $NewIndex = 0;
+
+        $_SESSION["games"] = array_combine(range($NewIndex,
+                                                 count($_SESSION["games"]) + ($NewIndex-1)),
+                                           array_values($_SESSION["games"]));
+    }
+}
+
+if (isset($_POST['DeleteGame']))
+{
+    DeleteGame($_POST['DeleteGame']);
+}
 
 include_once "./Wrappers/header.php";
 include_once "./Wrappers/menu.php";
+
+//print_r($_SESSION["games"]);
 ?>
 
 <h1>
@@ -31,12 +39,12 @@ include_once "./Wrappers/menu.php";
 </h1>
 
 <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque semper elit nisl, at cursus felis dapibus at. Ut vitae est consectetur, faucibus augue vel, faucibus sem. Praesent accumsan mollis nunc et viverra. Integer consectetur sodales tincidunt. Praesent ullamcorper nisl sed sem malesuada ullamcorper. Sed blandit, justo nec euismod vulputate, dui ligula eleifend quam, in tempus lorem ligula eu lectus. Cras et venenatis nulla, sit amet tincidunt risus. Ut nunc sapien, feugiat et aliquam et, finibus id mauris. Sed a libero varius nunc tincidunt dictum eu eget odio. Etiam gravida dui vitae felis accumsan pellentesque ut nec quam.
+    Welcome to Game Changers! Game Changers is a website for you to compile game information, whether they be games you own or games you've only heard of!
 </p>
 
 <?php
 
-if ($user != null)
+if (isset($_SESSION['loggedin']) && isset($_SESSION["games"]) && count($_SESSION["games"]) > 0)
 {
     echo "
     <table>
@@ -53,22 +61,31 @@ if ($user != null)
             <th>
                 Rating
             </th>
+            <th>
+                Delete?
+            </th>
         </tr>";
-    foreach ($games as [$name, $releaseDate, $genre, $rating])
+    for($i = 0; $i < count($_SESSION["games"]); $i++)
     {
+        $g = $_SESSION["games"][$i];
         echo "
         <tr>
             <td>
-                $name
+                $g[0]
             </td>
             <td>
-                $releaseDate
+                $g[1]
             </td>
             <td>
-                $genre
+                $g[2]
             </td>
             <td>
-                $rating
+                $g[3]
+            </td>
+            <td>
+                <form method='post'>
+                    <input class='btn delete' type='submit' name='DeleteGame' value='$i'/>
+                </form>
             </td>
         </tr>";
     }
@@ -76,10 +93,6 @@ if ($user != null)
 }
 
 ?>
-
-<p>
-    Duis nec mauris eros. Integer eleifend tellus sed augue fringilla mollis. Morbi nec convallis nunc. Sed condimentum nulla elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut viverra, nulla id congue iaculis, velit diam tempus leo, gravida tempus arcu lectus eu lorem. Vestibulum lobortis est in tortor pretium, in lobortis nisi consequat. Vivamus rutrum molestie turpis eu posuere. Curabitur enim ante, imperdiet ac consectetur ultricies, malesuada sit amet ipsum. Phasellus id cursus ex.
-</p>
 
 <?php
 include_once "./Wrappers/footer.php";
