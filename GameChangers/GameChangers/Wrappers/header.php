@@ -34,6 +34,40 @@ $Header = "Game Changers";
 
 $Style = $_SESSION['style'];
 
+function SetGamesByUser($uId)
+{
+    /*
+    UserTable UserGameTable Game Table
+    UserTable.UserId -> UserGameTable.GameId    ->  GameTable.*
+
+    Get All Game Info From GameTable By Filtering UserGameTable On UserId
+     */
+    $sql4 = "SELECT g.GameName, g.ReleaseDate, g.Genre, g.Rating, g.GameId
+                                               FROM UserGameTable as ug
+                                               LEFT JOIN UserTable as u
+                                               ON ug.UserId = u.UserId
+                                               LEFT JOIN GameTable as g
+                                               ON g.GameId = ug.GameId
+                                               WHERE ug.UserId = $uId";
+    if($res = mysqli_query($_SESSION["link"], $sql4))
+    {
+        $results = array();
+        while ($games = mysqli_fetch_assoc($res))
+        {
+            $results[] = $games;
+        }
+
+        $_SESSION["games"] = $results;
+
+        for ($i = 0; $i < count($_SESSION['games']); $i++)
+        {
+            $_SESSION["games"][$i] = array_combine(range(0, count($_SESSION["games"][$i])-1),
+                                               array_values($_SESSION["games"][$i])
+                                               );
+        }
+    }
+}
+
 ?>
 <head>
   <meta content="text/html; charset=ISO-8859-1"  http-equiv="content-type">

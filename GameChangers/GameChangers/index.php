@@ -7,32 +7,29 @@ if (!isset($_SESSION["games"])) $_SESSION["games"] = [
 
 ];
 
+include_once "./Wrappers/header.php";
+include_once "./Wrappers/menu.php";
+
 function DeleteGame(int $index)
 {
+    // Get GameId For Use With UserGameTable and GameTable
+    $gId = $_SESSION["games"][$index][4];
+
     // Delete From GameTable
+    $sql = "DELETE FROM UserGameTable WHERE GameId = $gId";
+    mysqli_query($_SESSION["link"], $sql);
 
+    // Delete From UserGameTable
+    $sql2 = "DELETE FROM GameTable WHERE GameId = $gId";
+    mysqli_query($_SESSION["link"], $sql2);
 
-    // Delete From $_SESSION["games"]
-    unset($_SESSION["games"][$index]);
-
-    // Arrays In PHP Do Not Re-index, Must Be Done Manually
-    if (count($_SESSION["games"]) != 0)
-    {
-        $NewIndex = 0;
-
-        $_SESSION["games"] = array_combine(range($NewIndex,
-                                                 count($_SESSION["games"]) + ($NewIndex-1)),
-                                           array_values($_SESSION["games"]));
-    }
+    SetGamesByUser($_SESSION["id"]);
 }
 
 if (isset($_POST['DeleteGame']))
 {
     DeleteGame($_POST['DeleteGame']);
 }
-
-include_once "./Wrappers/header.php";
-include_once "./Wrappers/menu.php";
 
 //print_r($_SESSION["games"]);
 ?>
@@ -67,6 +64,9 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION["games"]) && count($_SESSION
             <th>
                 Delete?
             </th>
+            <th>
+                Edit?
+            </th>
         </tr>";
     for($i = 0; $i < count($_SESSION["games"]); $i++)
     {
@@ -88,6 +88,11 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION["games"]) && count($_SESSION
             <td>
                 <form method='post'>
                     <input class='btn delete' type='submit' name='DeleteGame' value='$i'/>
+                </form>
+            </td>
+            <td>
+                <form method='post'>
+                    <a href='EditGame.php'>Edit</a>
                 </form>
             </td>
         </tr>";
