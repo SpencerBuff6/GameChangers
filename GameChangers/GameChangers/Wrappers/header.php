@@ -1,12 +1,11 @@
-<?php 
-require "config.php"; 
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <?php 
 
 session_start();
+require "config.php"; 
 
 $WebsiteName = "Game Changers" . " - " . $pageName;
 if(!isset($_SESSION['style']))
