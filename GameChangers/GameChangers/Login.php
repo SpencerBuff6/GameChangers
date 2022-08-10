@@ -9,8 +9,8 @@ if(isset($_SESSION["logged in"]) && $_SESSION["logged in"] === true )
 }
 
 require "config.php";
-require "header.php";
-require "menu.php";
+require "./Wrappers/header.php";
+require "./Wrappers/menu.php";
 
 $username = $password = "";
 $username_err = $password_err = "";
@@ -132,5 +132,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             <p>Dont have an account? <a href="Register.php"Sign up now</a>.</p>
         </form>
     </div>
-</body>
-</html>
+    <?php    
+    require "./Wrappers/footer.php";
+    ?>

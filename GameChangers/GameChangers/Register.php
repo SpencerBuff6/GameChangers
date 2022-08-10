@@ -124,15 +124,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                     </span>
                 </div>
                 <div class="form-group">
-                    input type="submit" class="btn btn-primary" value="submit">
-                    input type="reset" class="btn btn-secondary ml-2" value="Reset">
+                    <input type="submit" class="btn btn-primary" value="submit"/>
+                    <input type="reset" class="btn btn-secondary ml-2" value="Reset"/>
                 </div>
-                <p>Already have an account? <a href="login.php>Login Here"</a>.</p>
+                <p>
+                    Already have an account? 
+                    <a href="login.php">Login Here</a>
+                </p>
             </form>
         </div>
     </body>
 </html>
 
 <?php
-require "footer.php";
+require "./Wrappers/footer.php";
 ?>

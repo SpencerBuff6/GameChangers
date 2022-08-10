@@ -2,7 +2,7 @@
 session_start();
 
 $pageName = "Home";
-$_SESSION["loggedin"] = true;
+$_SESSION["loggedin"] = false;
 
 if (!isset($_SESSION["games"])) $_SESSION["games"] = [
 
