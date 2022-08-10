@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$pageName = "Register Account";
+
 require "config.php";
 require "./Wrappers/header.php";
 require "./Wrappers/menu.php";
@@ -71,7 +73,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     if (empty(trim($_POST["confirm_password"])))
     {
         $confirm_password_err = "Please confirm password.";
-    } 
+    }
     else
     {
         $confirm_password = trim($_POST["confirm_password"]);
