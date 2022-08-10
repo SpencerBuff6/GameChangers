@@ -12,32 +12,139 @@ if(isset($_POST['gameName']) &&
    isset($_POST['genre']) &&
    isset($_POST['rating']))
 {
-    // If Games List Set And Not Empty
-    if (isset($_SESSION["games"]))
-    {
-        $newGame = [
-            0 => $_POST['gameName'],
-            1 => $_POST['releaseDate'],
-            2 => $_POST['genre'],
-            3 => $_POST['rating']
-        ];
+    //// If Games List Set And Not Empty
+    //if (isset($_SESSION["games"]))
+    //{
+    //    $newGame = [
+    //        0 => $_POST['gameName'],
+    //        1 => $_POST['releaseDate'],
+    //        2 => $_POST['genre'],
+    //        3 => $_POST['rating']
+    //    ];
 
-        array_push($_SESSION["games"], $newGame);
+    //    array_push($_SESSION["games"], $newGame);
 
-        header("Location: index.php");
-    }
-    // If Games List Null Or Empty
-    else
+    //    header("Location: index.php");
+    //}
+    //// If Games List Null Or Empty
+    //else
+    //{
+    //    $_SESSION["games"] = [
+    //        0 => [
+    //            0 => $_POST['gameName'],
+    //            1 => $_POST['releaseDate'],
+    //            2 => $_POST['genre'],
+    //            3 => $_POST['rating']
+    //        ]
+    //    ];
+    //}
+
+    $tempGameName = trim($_POST['gameName']);
+    $tempReleaseDate = trim($_POST['releaseDate']);
+    $tempGenre = trim($_POST['genre']);
+    $tempRating = trim($_POST['rating']);
+
+    $sql = "INSERT INTO GameTable (GameName, ReleaseDate, Genre, Rating) VALUES (?, ?, ?, ?)";
+    if($stmt = mysqli_prepare($_SESSION["link"], $sql))
     {
-        $_SESSION["games"] = [
-            0 => [
-                0 => $_POST['gameName'],
-                1 => $_POST['releaseDate'],
-                2 => $_POST['genre'],
-                3 => $_POST['rating']
-            ]
-        ];
+        mysqli_stmt_bind_param($stmt, "ssss", $param_GameName, $param_ReleaseDate, $param_Genre, $param_Rating);
+
+        $param_GameName = $tempGameName;
+        $param_ReleaseDate = $tempReleaseDate;
+        $param_Genre = $tempGenre;
+        $param_Rating = $tempRating;
+
+        // If Game Added Proper
+        if(mysqli_stmt_execute($stmt))
+        {
+            // Get UserId and GameId
+            $tempUserId = $_SESSION["id"];
+            $tempGameId = null;
+
+            $sql2 = "SELECT GameId FROM GameTable WHERE GameName = ? AND ReleaseDate = ? AND Genre = ? AND Rating = ? LIMIT 1";
+            if($stmt = mysqli_prepare($_SESSION["link"], $sql2))
+            {
+                mysqli_stmt_bind_param($stmt, 'ssss', $param_GameName, $param_ReleaseDate, $param_Genre, $param_Rating);
+
+                $param_GameName = $tempGameName;
+                $param_ReleaseDate = $tempReleaseDate;
+                $param_Genre = $tempGenre;
+                $param_Rating = $tempRating;
+
+                if(mysqli_stmt_execute($stmt))
+                {
+                    mysqli_stmt_store_result($stmt);
+
+                    if(mysqli_stmt_num_rows($stmt) == 1)
+                    {
+                        // Store GameId of Newly Added Game
+                        mysqli_stmt_bind_result($stmt, $tempGameId);
+
+                        if(mysqli_stmt_fetch($stmt))
+                        {
+                            $sql3 = "INSERT INTO UserGameTable (UserId, GameId) VALUES (?, ?)";
+                            if($stmt = mysqli_prepare($_SESSION["link"], $sql3))
+                            {
+                                mysqli_stmt_bind_param($stmt, "ii", $param_UserId, $param_GameId);
+
+                                $param_UserId = $tempUserId;
+                                $param_GameId = $tempGameId;
+
+                                // If UserGameTable Inserted Into
+                                if(mysqli_stmt_execute($stmt))
+                                {
+                                    /*
+                                    UserTable UserGameTable Game Table
+                                    UserTable.UserId -> UserGameTable.GameId    ->  GameTable.*
+
+                                    Get All Game Info From GameTable By Filtering UserGameTable On UserId
+                                    */
+                                    $sql4 = "SELECT g.GameName, g.ReleaseDate, g.Genre, g.Rating
+                                               FROM UserGameTable as ug
+                                               LEFT JOIN UserTable as u
+                                               ON ug.UserId = u.UserId
+                                               LEFT JOIN GameTable as g
+                                               ON g.GameId = ug.GameId
+                                               WHERE ug.UserId = ?";
+                                    if($stmt = mysqli_prepare($_SESSION["link"], $sql4))
+                                    {
+                                        mysqli_stmt_bind_param($stmt, 'i', $param_UserId);
+                                        $param_UserId = $tempUserId;
+
+                                        if(mysqli_stmt_execute($stmt))
+                                        {
+                                            //
+                                        }
+                                    }
+                                }
+                            }
+
+                            header("location: index.php");
+                        }
+                    }
+                    else
+                    {
+                        echo "Oops! Something went wrong. Please try again later.";
+                    }
+                }
+                else
+                {
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
+                mysqli_stmt_close($stmt);
+            }
+
+            header("location: index.php");
+        }
+        else
+        {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+
+        mysqli_stmt_close($stmt);
     }
+
+    mysqli_close($_SESSION["link"]);
 }
 // If Not Adding Game Proper
 else
