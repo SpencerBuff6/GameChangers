@@ -31,6 +31,15 @@ if (isset($_POST['DeleteGame']))
     DeleteGame($_POST['DeleteGame']);
 }
 
+if (isset($_POST['EditGame']))
+{
+    $_SESSION['EditIds'] = [
+        $_POST['EditGame'],
+        $_SESSION["games"][$_POST['EditGame']][4]
+    ];
+    header("location: EditGame.php");
+}
+
 //print_r($_SESSION["games"]);
 ?>
 
@@ -92,7 +101,7 @@ if (isset($_SESSION['loggedin']) && isset($_SESSION["games"]) && count($_SESSION
             </td>
             <td>
                 <form method='post'>
-                    <a href='EditGame.php'>Edit</a>
+                    <input class='btn delete' type='submit' name='EditGame' value='$i'/>
                 </form>
             </td>
         </tr>";
