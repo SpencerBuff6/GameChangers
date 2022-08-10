@@ -9,6 +9,10 @@ if (!isset($_SESSION["games"])) $_SESSION["games"] = [
 
 function DeleteGame(int $index)
 {
+    // Delete From GameTable
+
+
+    // Delete From $_SESSION["games"]
     unset($_SESSION["games"][$index]);
 
     // Arrays In PHP Do Not Re-index, Must Be Done Manually

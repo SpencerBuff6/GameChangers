@@ -99,22 +99,55 @@ if(isset($_POST['gameName']) &&
 
                                     Get All Game Info From GameTable By Filtering UserGameTable On UserId
                                     */
-                                    $sql4 = "SELECT g.GameName, g.ReleaseDate, g.Genre, g.Rating
+                                    $sql4 = "SELECT g.GameName, g.ReleaseDate, g.Genre, g.Rating, g.GameId
                                                FROM UserGameTable as ug
                                                LEFT JOIN UserTable as u
                                                ON ug.UserId = u.UserId
                                                LEFT JOIN GameTable as g
                                                ON g.GameId = ug.GameId
-                                               WHERE ug.UserId = ?";
-                                    if($stmt = mysqli_prepare($_SESSION["link"], $sql4))
+                                               WHERE ug.UserId = $tempUserId";
+                                    if($res = mysqli_query($_SESSION["link"], $sql4))
                                     {
-                                        mysqli_stmt_bind_param($stmt, 'i', $param_UserId);
-                                        $param_UserId = $tempUserId;
+                                        //$param_UserId = $tempUserId;
+                                        //mysqli_stmt_bind_param($stmt, 'i', $param_UserId);
 
-                                        if(mysqli_stmt_execute($stmt))
+                                        //mysqli_stmt_execute($stmt);
+
+                                        $results = array();
+                                        while ($games = mysqli_fetch_assoc($res))
                                         {
-                                            //
+                                            $results[] = $games;
                                         }
+
+                                        $_SESSION["games"] = $results;
+
+                                        for ($i = 0; $i < count($_SESSION['games']); $i++)
+                                        {
+                                            $_SESSION["games"][$i] = array_combine(range(0, count($_SESSION["games"][$i])-1),
+                                                                               array_values($_SESSION["games"][$i])
+                                                                               );
+                                        }
+                                        //mysqli_stmt_store_result($stmt);
+
+                                        //$tempGameNames = [];
+                                        //$tempReleaseDates = [];
+                                        //$tempGenres = [];
+                                        //$tempRatings = [];
+                                        //$tempGameIDs = [];
+
+                                        //// Store All Games of User
+                                        //mysqli_stmt_bind_result($stmt, $tempGameNames, $tempReleaseDates, $tempGenres, $tempRatings, $tempGameIDs);
+                                        //for($i = 0; $i < count($tempGameNames); $i++)
+                                        //{
+                                        //    $tempGame = [
+                                        //        0 => $tempGameNames[$i],
+                                        //        1 => $tempReleaseDates[$i],
+                                        //        2 => $tempGenres[$i],
+                                        //        3 => $tempRatings[$i],
+                                        //        4 => $tempGameIDs[$i],
+                                        //    ];
+                                        //    array_push($_SESSION["games"], $tempGame);
+                                        //}
                                     }
                                 }
                             }
@@ -131,7 +164,6 @@ if(isset($_POST['gameName']) &&
                 {
                     echo "Oops! Something went wrong. Please try again later.";
                 }
-                mysqli_stmt_close($stmt);
             }
 
             header("location: index.php");
