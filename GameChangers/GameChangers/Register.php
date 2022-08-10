@@ -14,16 +14,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $username_err ="Please enter a username.";
     }
-    elseif(!preg_match('/a-zA-Z0-9_]+$/', trim($_POST["username"])))
-    {
-        $username_err = "Username can only contain letters, numbers, and underscores.";
-    }
+    //elseif(!preg_match('/a-zA-Z0-9_]+$/', trim($_POST["username"])))
+    //{
+    //    $username_err = "Username can only contain letters, numbers, and underscores.";
+    //}
     else
     {
-        $sql = "SELECT id FROM users WHERE username = ?";
-        if($stmt = mysqli_prepare($link, $sql))
+        $temp_user = trim($_POST['username']);
+        $sql = "SELECT UserId FROM UserTable WHERE UserName = ?";
+        if($stmt = mysqli_prepare($_SESSION["link"], $sql))
         {
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            mysqli_stmt_bind_param($stmt, 's', $param_username);
             $param_username = trim($_POST["username"]);
             if(mysqli_stmt_execute($stmt))
             {
@@ -35,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 }
                 else
                 {
-                    $username = trim($_POST["username"]);
+                    $username = $temp_user;
                 }
             }
             else
@@ -50,9 +51,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $password_err = "Please enter a password.";
     }
+    else if(strlen(trim($_POST["password"])) < 6)
+    {
+        $password_err = "Password must have at least 6 characters.";
+    }
     else
     {
-        $password = trim($_POST["confirm_password"]);
+        $password = trim($_POST["password"]);
+    }
+
+    //else
+    //{
+    //    $password = trim($_POST["confirm_password"]);
+    //    if(empty($password_err) && ($password != $confirm_password))
+    //    {
+    //        $confirm_password_err = "Password did not match.";
+    //    }
+    //}
+    if (empty(trim($_POST["confirm_password"])))
+    {
+        $confirm_password_err = "Please confirm password.";
+    } 
+    else
+    {
+        $confirm_password = trim($_POST["confirm_password"]);
         if(empty($password_err) && ($password != $confirm_password))
         {
             $confirm_password_err = "Password did not match.";
@@ -61,8 +83,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err))
     {
-        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-        if($stmt = mysqli_prepare($link, $sql))
+        $sql = "INSERT INTO UserTable (UserName, password) VALUES (?, ?)";
+        if($stmt = mysqli_prepare($_SESSION["link"], $sql))
         {
             mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
 
@@ -82,7 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         }
     }
 
-    mysqli_close($link);
+    mysqli_close($_SESSION["link"]);
 }
 
 ?>
@@ -118,7 +140,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 <div class="form-group">
                     <label>Confirm Password</label>
                     <input type="password" name="confirm_password" class="form-control
-                           <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirn_password; ?>"/>
+                           <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>"/>
                     <span class="invalid_feedback">
                         <?php echo $confirm_password_err ?>
                     </span>
