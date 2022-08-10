@@ -64,6 +64,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
 
+                            SetGamesByUser($_SESSION["id"]);
+
                             header("location: index.php");
                         }
                         else
