@@ -1,6 +1,6 @@
 <?php
 
-define ('DB_SERVER', 'localhost: 3306');
+define ('DB_SERVER', 'localhost');
 define ('DB_USERNAME', 'phpa');
 define ('DB_PASSWORD', 'some_strong_password');
 define ('DB_NAME', 'Game Collection');
